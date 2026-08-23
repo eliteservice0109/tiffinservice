@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiffin Services</title>
+<style>
+  * { box-sizing: border-box; }
+  :root{
+    --navy:#082653;
+    --navy2:#0d356d;
+    --green:#087b32;
+    --green2:#0b8d3d;
+    --orange:#ff4a12;
+    --red:#ef1b19;
+    --gold:#ffe100;
+    --cream:#fffdf2;
+    --line:#2b65aa;
+  }
+  body{
+    margin:0;
+    padding:20px;
+    background:#f4f4f4;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#091a38;
+  }
+  .poster{
+    width:min(100%, 1050px);
+    margin:auto;
+    background:white;
+    border:3px solid var(--navy);
+    padding:12px;
+    box-shadow:0 5px 25px rgba(0,0,0,.12);
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    height:125px;
+    overflow:hidden;
+  }
+  .brand h1{
+    margin:0;
+    font-size:clamp(42px,7vw,88px);
+    line-height:1;
+    letter-spacing:2px;
+    font-weight:900;
+    color:var(--navy);
+  }
+  .burst{
+    color:var(--navy);
+    font-size:42px;
+    font-weight:bold;
+    line-height:.7;
+  }
+
+  .menus{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .menu-card{
+    border:1.5px solid var(--line);
+    border-radius:17px;
+    overflow:hidden;
+  }
+  .menu-card.veg{
+    border-color:#23814a;
+  }
+  .menu-title{
+    height:62px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:clamp(22px,3vw,34px);
+    font-weight:900;
+    letter-spacing:.5px;
+    background:var(--navy);
+  }
+  .veg .menu-title{ background:var(--green); }
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+  }
+  th,td{
+    border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  tr:last-child td{ border-bottom:0; }
+  th:last-child,td:last-child{ border-right:0; }
+
+  th{
+    height:82px;
+    color:white;
+    font-size:18px;
+    font-weight:900;
+    text-transform:uppercase;
+  }
+  th.day{ background:var(--navy2); width:26%; }
+  th.lunch{ background:var(--orange); width:37%; }
+  th.dinner{ background:var(--navy2); width:37%; }
+  .veg th.day,.veg th.dinner{ background:var(--green); }
+  .veg th.lunch{ background:var(--orange); }
+
+  td{
+    vertical-align:middle;
+    padding:10px 10px;
+    font-size:17px;
+    line-height:1.28;
+    min-height:100px;
+  }
+  td.day{
+    background:#fffbe4;
+    text-align:center;
+    font-size:22px;
+    font-weight:900;
+    color:var(--navy);
+  }
+  .veg td.day{
+    background:#f4fae5;
+    color:var(--green);
+  }
+  td.food{
+    text-align:center;
+    white-space:pre-line;
+  }
+  .sun,.moon{
+    font-size:25px;
+    display:block;
+    margin-bottom:3px;
+  }
+  .sun{ color:#fff; }
+  .moon{ color:#fff; }
+
+  .contact{
+    margin-top:13px;
+    height:72px;
+    border-radius:18px;
+    background:var(--navy);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:22px;
+    font-size:clamp(20px,3vw,35px);
+    font-weight:900;
+    letter-spacing:.5px;
+  }
+  .phone{
+    width:48px;
+    height:48px;
+    border:3px solid white;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    font-size:28px;
+  }
+  .number{ color:var(--gold); }
+
+  .pricing{
+    margin-top:13px;
+    border:1.5px solid #163a70;
+    border-radius:17px;
+    overflow:hidden;
+    position:relative;
+    padding-top:15px;
+  }
+  .pricing-label{
+    position:absolute;
+    top:-16px;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--navy);
+    color:white;
+    padding:4px 20px 5px;
+    border-radius:7px;
+    font-size:23px;
+    font-weight:900;
+  }
+  .price-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    padding:4px 10px 12px;
+  }
+  .price-item{
+    text-align:center;
+    padding:5px 8px;
+    border-right:1px dotted #555;
+  }
+  .price-item:last-child{ border-right:0; }
+  .price-name{
+    font-size:16px;
+    font-weight:900;
+    line-height:1.1;
+    color:var(--navy);
+  }
+  .price-name.green{ color:var(--green); }
+  .price-value{
+    margin-top:8px;
+    font-size:25px;
+    font-weight:900;
+    color:var(--red);
+  }
+  .price-bottom{
+    border-top:2px solid var(--navy);
+    margin:0 12px;
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    text-align:center;
+  }
+  .bottom-item{
+    padding:10px;
+    border-right:1px dotted #555;
+  }
+  .bottom-item:last-child{ border-right:0; }
+
+  .delivery{
+    margin-top:13px;
+    border:1.5px solid #163a70;
+    border-radius:17px;
+    height:78px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:28px;
+    overflow:hidden;
+  }
+  .delivery .line{
+    width:115px;
+    height:2px;
+    background:var(--orange);
+    position:relative;
+  }
+  .delivery .line:after,
+  .delivery .line:before{
+    content:"";
+    position:absolute;
+    height:2px;
+    background:var(--orange);
+    width:30px;
+  }
+  .delivery .line:before{ left:0; top:-8px; }
+  .delivery .line:after{ left:0; top:8px; }
+  .scooter{
+    font-size:45px;
+  }
+  .delivery-text{
+    font-size:clamp(30px,5vw,54px);
+    color:var(--navy);
+    font-weight:900;
+    letter-spacing:1px;
+  }
+
+  @media (max-width: 760px){
+    body{ padding:6px; }
+    .poster{ padding:7px; }
+    .brand{ height:80px; }
+    .burst{ font-size:25px; }
+    .menus{ grid-template-columns:1fr; gap:12px; }
+    th{ height:64px; font-size:14px; }
+    td{ font-size:14px; padding:8px 5px; }
+    td.day{ font-size:16px; }
+    .contact{ height:62px; gap:10px; }
+    .phone{ width:40px; height:40px; font-size:22px; }
+    .price-grid{ grid-template-columns:repeat(2,1fr); }
+    .price-item{ border-bottom:1px dotted #555; }
+    .price-item:nth-child(2n){ border-right:0; }
+    .price-bottom{ grid-template-columns:1fr; }
+    .bottom-item{ border-right:0; border-bottom:1px dotted #555; }
+    .bottom-item:last-child{ border-bottom:0; }
+    .delivery{ height:70px; gap:10px; }
+    .delivery .line{ display:none; }
+  }
+</style>
+</head>
+<body>
+<main class="poster">
+  <header class="brand">
+    <span class="burst">≻<br>≻<br>≻</span>
+    <h1>TIFFIN SERVICES</h1>
+    <span class="burst">≺<br>≺<br>≺</span>
+  </header>
+
+  <section class="menus">
+    <div class="menu-card">
+      <div class="menu-title">NON VEG TIFFIN MENU</div>
+      <table>
+        <thead>
+          <tr>
+            <th class="day">DAY</th>
+            <th class="lunch"><span class="sun">☀</span>LUNCH</th>
+            <th class="dinner"><span class="moon">☾</span>DINNER</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="day">MONDAY</td><td class="food">Rice or Chapati<br>+ Dal fry<br>+ Egg masala<br>+ Salad</td><td class="food">Chapati<br>+ Mix dal<br>+ Vegetable<br>+ Salad</td></tr>
+          <tr><td class="day">TUESDAY</td><td class="food">Rice or Chapati<br>+ Dal fry<br>+ Vegetable<br>+ Salad</td><td class="food">Chapati<br>+ Mix dal<br>+ Vegetable<br>+ Salad</td></tr>
+          <tr><td class="day">WEDNESDAY</td><td class="food">Chicken Biriyani<br>+ Raita</td><td class="food">Roti<br>+ Chhole<br>+ Salad</td></tr>
+          <tr><td class="day">THURSDAY</td><td class="food">Rice or Chapati<br>+ Dal fry<br>+ Vegetable<br>+ Salad</td><td class="food">Allu paratha<br>+ Tomato Chatni<br>+ Salad</td></tr>
+          <tr><td class="day">FRIDAY</td><td class="food">Rice or Chapati<br>+ Dal fry<br>+ Vegetable<br>+ Salad</td><td class="food">Chapati<br>+ Egg Curry<br>+ Salad</td></tr>
+          <tr><td class="day">SATURDAY</td><td class="food">Rice or Chapati<br>+ Dal fry<br>+ Panner fry<br>+ Salad</td><td class="food">Chapati<br>+ Vegetable<br>+ Kheer<br>+ Salad</td></tr>
+          <tr><td class="day">SUNDAY</td><td class="food">Rice or Chapati<br>+ Dal fry<br>+ Vegetable<br>+ Salad</td><td class="food">Chapati<br>+ Chicken curry<br>+ Salad</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="menu-card veg">
+      <div class="menu-title">VEG TIFFIN MENU</div>
+      <table>
+        <thead>
+          <tr>
+            <th class="day">DAY</th>
+            <th class="lunch"><span class="sun">☀</span>LUNCH</th>
+            <th class="dinner"><span class="moon">☾</span>DINNER</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="day">MONDAY</td><td class="food">Rice or Chapati<br>+ Dal fry<br>+ Chhole<br>+ Salad</td><td class="food">Chapati<br>+ Mix dal<br>+ Vegetable<br>+ Salad</td></tr>
+          <tr><td class="day">TUESDAY</td><td class="food">Rice or Chapati<br>+ Dal fry<br>+ Vegetable<br>+ Salad</td><td class="food">Chapati<br>+ Mix dal<br>+ Vegetable<br>+ Salad</td></tr>
+          <tr><td class="day">WEDNESDAY</td><td class="food">Veg Biriyani<br>+ Raita</td><td class="food">Roti<br>+ Chhole<br>+ Salad</td></tr>
+          <tr><td class="day">THURSDAY</td><td class="food">Rice or Chapati<br>+ Dal fry<br>+ Vegetable<br>+ Salad</td><td class="food">Allu paratha<br>+ Tomato Chatni<br>+ Salad</td></tr>
+          <tr><td class="day">FRIDAY</td><td class="food">Rice or Chapati<br>+ Dal fry<br>+ Vegetable<br>+ Salad</td><td class="food">Chapati<br>+ Mix Dal<br>+ Vegetable<br>+ Salad</td></tr>
+          <tr><td class="day">SATURDAY</td><td class="food">Rice or Chapati<br>+ Dal fry<br>+ Panner fry<br>+ Salad</td><td class="food">Chapati<br>+ Vegetable<br>+ Kheer<br>+ Salad</td></tr>
+          <tr><td class="day">SUNDAY</td><td class="food">Rice or Chapati<br>+ Dal fry<br>+ Vegetable<br>+ Salad</td><td class="food">Chapati<br>+ Panner<br>+ Salad</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="contact">
+    <span class="phone">☎</span>
+    <span>CONTACT NUMBER : <span class="number">+91 7975596738</span></span>
+  </section>
+
+  <section class="pricing">
+    <div class="pricing-label">PRICING</div>
+    <div class="price-grid">
+      <div class="price-item"><div class="price-name">MONTHLY<br>LUNCH</div><div class="price-value">₹2100</div></div>
+      <div class="price-item"><div class="price-name">MONTHLY<br>DINNER</div><div class="price-value">₹2100</div></div>
+      <div class="price-item"><div class="price-name green">MONTHLY<br>+ DINNER</div><div class="price-value">₹4000</div></div>
+      <div class="price-item"><div class="price-name">ONE TIME<br>DINNER</div><div class="price-value">₹100</div></div>
+      <div class="price-item"><div class="price-name">ONE TIME<br>LUNCH</div><div class="price-value">₹100</div></div>
+      <div class="price-item"><div class="price-name">ONE TIME<br>LUNCH + DINNER</div><div class="price-value">₹200</div></div>
+    </div>
+    <div class="price-bottom">
+      <div class="bottom-item"><div class="price-name">WEEKLY<br>DINNER</div><div class="price-value">₹600</div></div>
+      <div class="bottom-item"><div class="price-name">WEEKLY<br>LUNCH</div><div class="price-value">₹600</div></div>
+      <div class="bottom-item"><div class="price-name">DINNER + LUNCH</div><div class="price-value">₹1200</div></div>
+    </div>
+  </section>
+
+  <footer class="delivery">
+    <span class="line"></span>
+    <span class="scooter">🛵</span>
+    <span class="delivery-text">HOME DELIVERY</span>
+    <span class="line"></span>
+  </footer>
+</main>
+</body>
+</html>

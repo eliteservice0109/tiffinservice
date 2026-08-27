@@ -1,172 +1,851 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tiffin Menu</title>
-<style>
-:root {
-  --bg:#f6f7f9; --card:#fff; --text:#17202a; --muted:#667085;
-  --line:#e7e9ee; --accent:#111827; --soft:#f1f3f6;
-}
-* { box-sizing:border-box; }
-body { margin:0; font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-       background:var(--bg); color:var(--text); }
-.container { max-width:1050px; margin:auto; padding:28px 18px 56px; }
-.hero { background:var(--accent); color:white; border-radius:24px; padding:34px 30px;
-         display:flex; justify-content:space-between; align-items:flex-end; gap:20px; }
-.hero h1 { margin:0 0 7px; font-size:clamp(30px,5vw,48px); letter-spacing:-1.5px; }
-.hero p { margin:0; color:#c9ced6; font-size:15px; }
-.contact { text-decoration:none; color:#111827; background:white; padding:13px 18px;
-            border-radius:999px; font-weight:750; white-space:nowrap; transition:.2s; }
-.contact:hover { transform:translateY(-2px); }
-.section { margin-top:30px; }
-.section-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
-.section h2 { margin:0; font-size:24px; letter-spacing:-.5px; }
-.badge { font-size:12px; font-weight:700; background:var(--soft); padding:7px 10px; border-radius:999px; color:var(--muted); }
-.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
-.day-card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:17px 18px;
-             display:flex; gap:16px; align-items:flex-start; min-height:92px; }
-.day { width:82px; flex:0 0 82px; font-weight:800; font-size:15px; }
-.meal { color:#475467; line-height:1.55; font-size:14px; }
-.prices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
-.price { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px; }
-.price .label { color:var(--muted); font-size:13px; }
-.price .value { margin-top:6px; font-size:21px; font-weight:850; }
-.note { margin-top:18px; background:#fff; border:1px solid var(--line); border-radius:18px; padding:20px; }
-.note strong { display:block; margin-bottom:10px; }
-.note ul { margin:0; padding-left:20px; color:#475467; line-height:1.7; }
-.footer { margin-top:30px; text-align:center; color:var(--muted); font-size:13px; }
-@media (max-width:720px) {
-  .hero { align-items:flex-start; flex-direction:column; }
-  .grid,.prices { grid-template-columns:1fr; }
-  .day { width:72px; flex-basis:72px; }
-}
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Tiffen Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <style>
+        /* ── Reset & Base ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f7f3ee;
+            padding: 40px 20px;
+            color: #2d2a24;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .page {
+            max-width: 1300px;
+            width: 100%;
+        }
+
+        /* ── Header ── */
+        .header {
+            text-align: center;
+            margin-bottom: 44px;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: #d94f2a;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 4px 16px;
+            border-radius: 100px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #1f1b17;
+            line-height: 1.15;
+        }
+
+        .header h1 span {
+            color: #d94f2a;
+        }
+
+        .header p {
+            margin-top: 8px;
+            font-size: 1.05rem;
+            color: #6b6258;
+            font-weight: 500;
+        }
+
+        .header .contact {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 14px;
+            background: #fff;
+            padding: 8px 24px 8px 20px;
+            border-radius: 100px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #1f1b17;
+        }
+
+        .header .contact svg {
+            width: 20px;
+            height: 20px;
+            fill: #d94f2a;
+        }
+
+        /* ── Tabs ── */
+        .tabs {
+            display: flex;
+            gap: 6px;
+            background: #e8e1da;
+            padding: 6px;
+            border-radius: 16px;
+            margin-bottom: 36px;
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tab-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #5a5147;
+            cursor: pointer;
+            transition: 0.2s;
+            letter-spacing: 0.01em;
+        }
+
+        .tab-btn.active {
+            background: #fff;
+            color: #1f1b17;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .tab-btn:hover:not(.active) {
+            color: #1f1b17;
+        }
+
+        /* ── Menu Panel ── */
+        .panel {
+            display: none;
+            animation: fadeUp 0.35s ease;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .panel-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f1b17;
+            letter-spacing: -0.01em;
+        }
+
+        .panel-header .tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 4px 16px;
+            border-radius: 100px;
+            background: #e8e1da;
+            color: #5a5147;
+        }
+
+        .panel-header .tag.nonveg {
+            background: #fce4dc;
+            color: #b53b1a;
+        }
+
+        .panel-header .tag.veg {
+            background: #e2f0e4;
+            color: #1f7a3d;
+        }
+
+        /* ── Menu Grid ── */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 1024px) {
+            .menu-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 450px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ── Day Card ── */
+        .day-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 18px 16px 20px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            transition: 0.2s;
+            border: 1px solid #f0e9e3;
+        }
+
+        .day-card:hover {
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.07);
+            transform: translateY(-2px);
+        }
+
+        .day-card .day {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1f1b17;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0e9e3;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .day-card .day .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #d94f2a;
+            flex-shrink: 0;
+        }
+
+        .day-card .day .dot.veg-dot {
+            background: #2a9d5a;
+        }
+
+        .meal {
+            margin-bottom: 14px;
+        }
+
+        .meal:last-child {
+            margin-bottom: 0;
+        }
+
+        .meal .label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #8f8376;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .meal .items {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #2d2a24;
+            line-height: 1.5;
+        }
+
+        .meal .items .highlight {
+            color: #d94f2a;
+            font-weight: 600;
+        }
+
+        .meal .items .highlight-veg {
+            color: #1f7a3d;
+            font-weight: 600;
+        }
+
+        .meal .items .sep {
+            color: #cbc1b6;
+            margin: 0 3px;
+        }
+
+        .meal .items .plus {
+            color: #cbc1b6;
+            margin: 0 2px;
+        }
+
+        /* ── Pricing ── */
+        .pricing {
+            margin-top: 48px;
+            background: #fff;
+            border-radius: 24px;
+            padding: 32px 36px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid #f0e9e3;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px 28px;
+        }
+
+        .pricing-item {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed #f0e9e3;
+        }
+
+        .pricing-item:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-item .plan {
+            font-weight: 500;
+            color: #3d3730;
+            font-size: 0.9rem;
+        }
+
+        .pricing-item .price {
+            font-weight: 700;
+            color: #1f1b17;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .pricing-item .price .rupee {
+            font-weight: 400;
+            color: #8f8376;
+            margin-right: 1px;
+        }
+
+        .pricing .note {
+            margin-top: 22px;
+            padding-top: 20px;
+            border-top: 2px solid #f0e9e3;
+            font-size: 0.85rem;
+            color: #5a5147;
+            line-height: 1.6;
+        }
+
+        .pricing .note strong {
+            color: #1f1b17;
+            font-weight: 600;
+        }
+
+        .pricing .note .highlight-box {
+            display: inline-block;
+            background: #fcf4ef;
+            padding: 2px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            color: #b53b1a;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            margin-top: 32px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #8f8376;
+            letter-spacing: 0.02em;
+        }
+
+        .footer a {
+            color: #d94f2a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ── Utilities ── */
+        .text-muted {
+            color: #8f8376;
+        }
+
+        .fw-600 {
+            font-weight: 600;
+        }
+
+        /* ── Responsive tweaks ── */
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header .contact {
+                font-size: 0.8rem;
+                padding: 6px 16px 6px 14px;
+            }
+
+            .pricing {
+                padding: 24px 18px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px 16px;
+            }
+
+            .pricing-item {
+                padding: 6px 0;
+                font-size: 0.85rem;
+            }
+
+            .tabs {
+                max-width: 100%;
+            }
+
+            .tab-btn {
+                font-size: 0.8rem;
+                padding: 10px 12px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-<main class="container">
-  <header class="hero">
-    <div>
-      <h1>Tiffin Menu</h1>
-      <p>Fresh home-style meals • Weekly & monthly plans available</p>
-      <div class="phone">+91 7975596738</div>
-    </div>
-    <div class="actions">
-      <a class="action whatsapp" href="https://wa.me/917975596738?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20the%20tiffin%20menu." target="_blank" rel="noopener">WhatsApp</a>
-      <a class="action call" href="tel:+917975596738">Call</a>
-    </div>
-  </header>
+    <div class="page">
 
-  <section class="section">
-    <div class="section-head"><h2>Weekly Menu</h2><span class="badge">Monday — Sunday</span></div>
-    <div class="grid">
-      
-      <article class="day-card">
-        <div class="day">Monday</div>
-        <div class="meal">Rice or Chapati + Dal fry + Egg masala + Salad</div>
-      </article>
-    
-      <article class="day-card">
-        <div class="day">Tuesday</div>
-        <div class="meal">Rice or Chapati + Dal fry + Vegetable + Salad</div>
-      </article>
-    
-      <article class="day-card">
-        <div class="day">Wednesday</div>
-        <div class="meal">Chicken Biriyani + Raita</div>
-      </article>
-    
-      <article class="day-card">
-        <div class="day">Thursday</div>
-        <div class="meal">Rice or Chapati + Dal fry + Vegetable + Salad</div>
-      </article>
-    
-      <article class="day-card">
-        <div class="day">Friday</div>
-        <div class="meal">Rice or Chapati + Rajma + Salad</div>
-      </article>
-    
-      <article class="day-card">
-        <div class="day">Saturday</div>
-        <div class="meal">Rice or Chapati + Dal fry + Panner fry + Salad</div>
-      </article>
-    
-      <article class="day-card">
-        <div class="day">Sunday</div>
-        <div class="meal">Rice or Chapati + Dal fry + Vegetable + Salad</div>
-      </article>
-    
-    </div>
-  </section>
+        <!-- ═══ HEADER ═══ -->
+        <header class="header">
+            <div class="badge">★ Daily Fresh</div>
+            <h1>tiffen <span>menu</span></h1>
+            <p>Homestyle meals · prepared fresh every day</p>
+            <div class="contact">
+                <svg viewBox="0 0 24 24" width="20" height="20">
+                    <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.36 11.36 0 003.57.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.57 1 1 0 01-.24 1.02l-2.2 2.2z"/>
+                </svg>
+                <span>+91 79755 96738</span>
+            </div>
+        </header>
 
-  <section class="section">
-    <div class="veg-hero">
-      <div>
-        <h2>Veg Tiffin Menu</h2>
-        <p>Fresh home-style vegetarian meals • Weekly & monthly plans available</p>
-      </div>
-    </div>
-    <div class="section-head" style="margin-top:18px;"><h2>Weekly Menu</h2><span class="badge">Monday — Sunday</span></div>
-    <div class="grid">
-      
-      <article class="day-card">
-        <div class="day">Monday</div>
-        <div class="meal">Chapati + Mix dal + Vegetable + Salad</div>
-      </article>
-    
-      <article class="day-card">
-        <div class="day">Tuesday</div>
-        <div class="meal">Roti + Chole + Salad</div>
-      </article>
-    
-      <article class="day-card">
-        <div class="day">Wednesday</div>
-        <div class="meal">Chapati + Mix dal + Vegetable + Salad</div>
-      </article>
-    
-      <article class="day-card">
-        <div class="day">Thursday</div>
-        <div class="meal">Allu paratha + Tomato Chatni + Salad</div>
-      </article>
-    
-      <article class="day-card">
-        <div class="day">Friday</div>
-        <div class="meal">Chapati + Egg Curry + Salad</div>
-      </article>
-    
-      <article class="day-card">
-        <div class="day">Saturday</div>
-        <div class="meal">Chapati + Vegetable + Kheer + Salad</div>
-      </article>
-    
-      <article class="day-card">
-        <div class="day">Sunday</div>
-        <div class="meal">Chapati + Chicken curry + Salad</div>
-      </article>
-    
-    </div>
-  </section>
+        <!-- ═══ TABS ═══ -->
+        <div class="tabs" role="tablist">
+            <button class="tab-btn active" data-tab="nonveg" role="tab">Non‑Veg</button>
+            <button class="tab-btn" data-tab="veg" role="tab">Veg</button>
+        </div>
 
-  <section class="section">
-    <div class="section-head"><h2>Plans & Pricing</h2><span class="badge">Simple pricing</span></div>
-    <div class="prices">
-      <div class="price"><div class="label">Monthly Lunch</div><div class="value">₹2,100</div></div><div class="price"><div class="label">Monthly Dinner</div><div class="value">₹2,100</div></div><div class="price"><div class="label">Lunch + Dinner</div><div class="value">₹4,000</div></div><div class="price"><div class="label">One time dinner</div><div class="value">₹100</div></div><div class="price"><div class="label">One time lunch</div><div class="value">₹100</div></div><div class="price"><div class="label">One time Lunch + Dinner</div><div class="value">₹200</div></div><div class="price"><div class="label">Weekly Dinner</div><div class="value">₹600</div></div><div class="price"><div class="label">Weekly Lunch</div><div class="value">₹600</div></div><div class="price"><div class="label">Dinner + Lunch</div><div class="value">₹1,200</div></div>
-    </div>
-    <div class="note">
-      <strong>Monthly subscription note</strong>
-      <ul>
-        <li>Provide two lunch boxes, each with 3 separate containers.</li>
-        <li>Or pay an additional up to ₹1,000 for the lunch boxes.</li>
-      </ul>
-    </div>
-  </section>
+        <!-- ═══ PANEL: NON‑VEG ═══ -->
+        <div class="panel active" id="panel-nonveg" role="tabpanel">
+            <div class="panel-header">
+                <h2>Non‑Veg Tiffen</h2>
+                <span class="tag nonveg">Non‑Veg</span>
+            </div>
 
-  <div class="footer">
-    <a href="https://wa.me/917975596738" target="_blank" rel="noopener" style="color:inherit;">
-      Contact: +91 7975596738
-    </a>
-  </div>
-</main>
+            <div class="menu-grid">
+                <!-- Monday -->
+                <div class="day-card">
+                    <div class="day"><span class="dot"></span> Monday</div>
+                    <div class="meal">
+                        <span class="label">Lunch</span>
+                        <div class="items">
+                            Rice <span class="sep">/</span> Chapati <span class="plus">+</span>
+                            <span class="highlight">Dal fry</span> <span class="plus">+</span>
+                            Egg masala <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                    <div class="meal">
+                        <span class="label">Dinner</span>
+                        <div class="items">
+                            Chapati <span class="plus">+</span> Mix dal <span class="plus">+</span>
+                            Vegetable <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="day-card">
+                    <div class="day"><span class="dot"></span> Tuesday</div>
+                    <div class="meal">
+                        <span class="label">Lunch</span>
+                        <div class="items">
+                            Rice <span class="sep">/</span> Chapati <span class="plus">+</span>
+                            <span class="highlight">Dal fry</span> <span class="plus">+</span>
+                            Vegetable <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                    <div class="meal">
+                        <span class="label">Dinner</span>
+                        <div class="items">
+                            Roti <span class="plus">+</span> <span class="highlight">Chole</span> <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wednesday -->
+                <div class="day-card">
+                    <div class="day"><span class="dot"></span> Wednesday</div>
+                    <div class="meal">
+                        <span class="label">Lunch</span>
+                        <div class="items">
+                            <span class="highlight">Chicken Biriyani</span> <span class="plus">+</span> Raita
+                        </div>
+                    </div>
+                    <div class="meal">
+                        <span class="label">Dinner</span>
+                        <div class="items">
+                            Chapati <span class="plus">+</span> Mix dal <span class="plus">+</span>
+                            Vegetable <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thursday -->
+                <div class="day-card">
+                    <div class="day"><span class="dot"></span> Thursday</div>
+                    <div class="meal">
+                        <span class="label">Lunch</span>
+                        <div class="items">
+                            Rice <span class="sep">/</span> Chapati <span class="plus">+</span>
+                            <span class="highlight">Dal fry</span> <span class="plus">+</span>
+                            Vegetable <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                    <div class="meal">
+                        <span class="label">Dinner</span>
+                        <div class="items">
+                            <span class="highlight">Allu paratha</span> <span class="plus">+</span>
+                            Tomato Chatni <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Friday -->
+                <div class="day-card">
+                    <div class="day"><span class="dot"></span> Friday</div>
+                    <div class="meal">
+                        <span class="label">Lunch</span>
+                        <div class="items">
+                            Rice <span class="sep">/</span> Chapati <span class="plus">+</span>
+                            <span class="highlight">Rajma</span> <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                    <div class="meal">
+                        <span class="label">Dinner</span>
+                        <div class="items">
+                            Chapati <span class="plus">+</span> <span class="highlight">Egg Curry</span> <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="day-card">
+                    <div class="day"><span class="dot"></span> Saturday</div>
+                    <div class="meal">
+                        <span class="label">Lunch</span>
+                        <div class="items">
+                            Rice <span class="sep">/</span> Chapati <span class="plus">+</span>
+                            <span class="highlight">Dal fry</span> <span class="plus">+</span>
+                            Panner fry <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                    <div class="meal">
+                        <span class="label">Dinner</span>
+                        <div class="items">
+                            Chapati <span class="plus">+</span> Vegetable <span class="plus">+</span>
+                            <span class="highlight">Kheer</span> <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="day-card">
+                    <div class="day"><span class="dot"></span> Sunday</div>
+                    <div class="meal">
+                        <span class="label">Lunch</span>
+                        <div class="items">
+                            Rice <span class="sep">/</span> Chapati <span class="plus">+</span>
+                            <span class="highlight">Dal fry</span> <span class="plus">+</span>
+                            Vegetable <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                    <div class="meal">
+                        <span class="label">Dinner</span>
+                        <div class="items">
+                            Chapati <span class="plus">+</span> <span class="highlight">Chicken curry</span> <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ PANEL: VEG ═══ -->
+        <div class="panel" id="panel-veg" role="tabpanel">
+            <div class="panel-header">
+                <h2>Veg Tiffen</h2>
+                <span class="tag veg">Veg</span>
+            </div>
+
+            <div class="menu-grid">
+                <!-- Monday -->
+                <div class="day-card">
+                    <div class="day"><span class="dot veg-dot"></span> Monday</div>
+                    <div class="meal">
+                        <span class="label">Lunch</span>
+                        <div class="items">
+                            Rice <span class="sep">/</span> Chapati <span class="plus">+</span>
+                            <span class="highlight-veg">Dal fry</span> <span class="plus">+</span>
+                            Chole <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                    <div class="meal">
+                        <span class="label">Dinner</span>
+                        <div class="items">
+                            Chapati <span class="plus">+</span> Mix dal <span class="plus">+</span>
+                            Vegetable <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="day-card">
+                    <div class="day"><span class="dot veg-dot"></span> Tuesday</div>
+                    <div class="meal">
+                        <span class="label">Lunch</span>
+                        <div class="items">
+                            Rice <span class="sep">/</span> Chapati <span class="plus">+</span>
+                            <span class="highlight-veg">Dal fry</span> <span class="plus">+</span>
+                            Vegetable <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                    <div class="meal">
+                        <span class="label">Dinner</span>
+                        <div class="items">
+                            Roti <span class="plus">+</span> <span class="highlight-veg">Chole</span> <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wednesday -->
+                <div class="day-card">
+                    <div class="day"><span class="dot veg-dot"></span> Wednesday</div>
+                    <div class="meal">
+                        <span class="label">Lunch</span>
+                        <div class="items">
+                            <span class="highlight-veg">Veg Biriyani</span> <span class="plus">+</span> Raita
+                        </div>
+                    </div>
+                    <div class="meal">
+                        <span class="label">Dinner</span>
+                        <div class="items">
+                            Chapati <span class="plus">+</span> Mix dal <span class="plus">+</span>
+                            Vegetable <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thursday -->
+                <div class="day-card">
+                    <div class="day"><span class="dot veg-dot"></span> Thursday</div>
+                    <div class="meal">
+                        <span class="label">Lunch</span>
+                        <div class="items">
+                            Rice <span class="sep">/</span> Chapati <span class="plus">+</span>
+                            <span class="highlight-veg">Dal fry</span> <span class="plus">+</span>
+                            Vegetable <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                    <div class="meal">
+                        <span class="label">Dinner</span>
+                        <div class="items">
+                            <span class="highlight-veg">Allu paratha</span> <span class="plus">+</span>
+                            Tomato Chatni <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Friday -->
+                <div class="day-card">
+                    <div class="day"><span class="dot veg-dot"></span> Friday</div>
+                    <div class="meal">
+                        <span class="label">Lunch</span>
+                        <div class="items">
+                            Rice <span class="sep">/</span> Chapati <span class="plus">+</span>
+                            <span class="highlight-veg">Rajma</span> <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                    <div class="meal">
+                        <span class="label">Dinner</span>
+                        <div class="items">
+                            Chapati <span class="plus">+</span> Mix Dal <span class="plus">+</span>
+                            Vegetable <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="day-card">
+                    <div class="day"><span class="dot veg-dot"></span> Saturday</div>
+                    <div class="meal">
+                        <span class="label">Lunch</span>
+                        <div class="items">
+                            Rice <span class="sep">/</span> Chapati <span class="plus">+</span>
+                            <span class="highlight-veg">Dal fry</span> <span class="plus">+</span>
+                            Panner fry <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                    <div class="meal">
+                        <span class="label">Dinner</span>
+                        <div class="items">
+                            Chapati <span class="plus">+</span> Vegetable <span class="plus">+</span>
+                            <span class="highlight-veg">Kheer</span> <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="day-card">
+                    <div class="day"><span class="dot veg-dot"></span> Sunday</div>
+                    <div class="meal">
+                        <span class="label">Lunch</span>
+                        <div class="items">
+                            Rice <span class="sep">/</span> Chapati <span class="plus">+</span>
+                            <span class="highlight-veg">Dal fry</span> <span class="plus">+</span>
+                            Vegetable <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                    <div class="meal">
+                        <span class="label">Dinner</span>
+                        <div class="items">
+                            Chapati <span class="plus">+</span> <span class="highlight-veg">Panner</span> <span class="plus">+</span> Salad
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ PRICING ═══ -->
+        <section class="pricing">
+            <div class="pricing-grid">
+                <div class="pricing-item">
+                    <span class="plan">Monthly Lunch</span>
+                    <span class="price"><span class="rupee">₹</span>2,100</span>
+                </div>
+                <div class="pricing-item">
+                    <span class="plan">Monthly Dinner</span>
+                    <span class="price"><span class="rupee">₹</span>2,100</span>
+                </div>
+                <div class="pricing-item">
+                    <span class="plan">Lunch + Dinner (Monthly)</span>
+                    <span class="price"><span class="rupee">₹</span>4,000</span>
+                </div>
+                <div class="pricing-item">
+                    <span class="plan">One Time Lunch</span>
+                    <span class="price"><span class="rupee">₹</span>100</span>
+                </div>
+                <div class="pricing-item">
+                    <span class="plan">One Time Dinner</span>
+                    <span class="price"><span class="rupee">₹</span>100</span>
+                </div>
+                <div class="pricing-item">
+                    <span class="plan">One Time Lunch + Dinner</span>
+                    <span class="price"><span class="rupee">₹</span>200</span>
+                </div>
+                <div class="pricing-item">
+                    <span class="plan">Weekly Lunch</span>
+                    <span class="price"><span class="rupee">₹</span>600</span>
+                </div>
+                <div class="pricing-item">
+                    <span class="plan">Weekly Dinner</span>
+                    <span class="price"><span class="rupee">₹</span>600</span>
+                </div>
+                <div class="pricing-item">
+                    <span class="plan">Dinner + Lunch (Weekly)</span>
+                    <span class="price"><span class="rupee">₹</span>1,200</span>
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>📦 Monthly subscription note:</strong>
+                Customers must either —
+                <span class="highlight-box">provide two lunch boxes, each with 3 separate containers</span>
+                &nbsp;or&nbsp; pay an additional <strong>up to ₹1,000</strong> for the lunch boxes.
+            </div>
+        </section>
+
+        <!-- ═══ FOOTER ═══ -->
+        <div class="footer">
+            <span>🌿 Freshly prepared · </span>
+            <span>📞 <a href="tel:+917975596738">+91 79755 96738</a></span>
+            <span> · Made with care</span>
+        </div>
+
+    </div>
+
+    <!-- ═══ TABS SCRIPT ═══ -->
+    <script>
+        (function() {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const panels = {
+                nonveg: document.getElementById('panel-nonveg'),
+                veg: document.getElementById('panel-veg'),
+            };
+
+            function activateTab(tabId) {
+                // update buttons
+                tabs.forEach(btn => {
+                    const isActive = btn.dataset.tab === tabId;
+                    btn.classList.toggle('active', isActive);
+                });
+
+                // update panels
+                Object.keys(panels).forEach(key => {
+                    panels[key].classList.toggle('active', key === tabId);
+                });
+            }
+
+            tabs.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    if (tabId) activateTab(tabId);
+                });
+            });
+
+            // ensure the initially active tab matches the panel
+            const activeTab = document.querySelector('.tab-btn.active');
+            if (activeTab) {
+                const id = activeTab.dataset.tab;
+                if (id) activateTab(id);
+            }
+        })();
+    </script>
 </body>
 </html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tiffin Menu</title>
+<style>
+:root {
+  --ink:#17212b; --muted:#66717d; --line:#e8edf1; --card:#ffffff;
+  --bg:#f6f8fa; --accent:#1f7a5a; --accent2:#e9f5ef;
+}
+* { box-sizing:border-box; }
+body { margin:0; font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+       background:var(--bg); color:var(--ink); }
+.container { max-width:1050px; margin:auto; padding:28px 18px 48px; }
+.hero { background:var(--card); border:1px solid var(--line); border-radius:24px; padding:30px;
+         display:flex; justify-content:space-between; gap:24px; align-items:center; box-shadow:0 8px 30px rgba(23,33,43,.05); }
+h1 { margin:0 0 8px; font-size:clamp(30px,5vw,48px); letter-spacing:-1.5px; }
+.subtitle { margin:0; color:var(--muted); font-size:16px; }
+.contact { display:inline-flex; align-items:center; gap:10px; background:var(--accent); color:#fff;
+            padding:13px 17px; border-radius:14px; text-decoration:none; font-weight:700; white-space:nowrap; }
+.contact:hover { filter:brightness(.95); }
+.section-title { margin:34px 0 14px; font-size:23px; }
+.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:18px; overflow:hidden; }
+.card h3 { margin:0; padding:15px 17px; background:var(--accent2); font-size:17px; }
+.row { display:grid; grid-template-columns:100px 1fr; padding:13px 17px; border-top:1px solid var(--line); gap:12px; }
+.row strong { font-size:14px; }
+.row span { color:#394550; line-height:1.45; }
+.pricing { margin-top:16px; display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.price { background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px; }
+.price b { display:block; font-size:23px; margin-top:5px; }
+.note { margin-top:16px; background:#fff; border:1px solid var(--line); border-radius:16px; padding:17px; color:var(--muted); line-height:1.55; }
+footer { text-align:center; color:var(--muted); margin-top:28px; font-size:13px; }
+@media(max-width:760px) {
+  .hero { flex-direction:column; align-items:flex-start; }
+  .grid,.pricing { grid-template-columns:1fr; }
+  .contact { width:100%; justify-content:center; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="hero">
+    <div>
+      <h1>Tiffin Menu</h1>
+      <p class="subtitle">Fresh, homestyle lunch &amp; dinner — weekly menu</p>
+    </div>
+    <a class="contact" href="https://wa.me/+917975596738" target="_blank" rel="noopener">💬 WhatsApp: +91 7975596738</a>
+  </header>
+
+  <h2 class="section-title">Veg Tiffin Menu</h2>
+  <div class="grid">
+    <section class="card">
+      <h3>Lunch</h3>
+      <div class="row"><strong>Monday</strong><span>Rice + Dal fry + Chole + Salad</span></div><div class="row"><strong>Tuesday</strong><span>Rice + Dal fry + Vegetable + Salad</span></div><div class="row"><strong>Wednesday</strong><span>Veg Biriyani + Raita</span></div><div class="row"><strong>Thursday</strong><span>Rice + Dal fry + Vegetable + Salad</span></div><div class="row"><strong>Friday</strong><span>Rice + Rajma + Salad</span></div><div class="row"><strong>Saturday</strong><span>Rice + Dal fry + Panner fry + Salad</span></div><div class="row"><strong>Sunday</strong><span>Rice + Dal fry + Vegetable + Salad</span></div>
+    </section>
+    <section class="card">
+      <h3>Dinner</h3>
+      <div class="row"><strong>Monday</strong><span>Roti + Mix dal + Vegetable + Salad</span></div><div class="row"><strong>Tuesday</strong><span>Roti + Chole + Salad</span></div><div class="row"><strong>Wednesday</strong><span>Roti + Mix dal + Vegetable + Salad</span></div><div class="row"><strong>Thursday</strong><span>Allu paratha + Tomato Chatni + Salad</span></div><div class="row"><strong>Friday</strong><span>Roti + Egg Curry + Salad</span></div><div class="row"><strong>Saturday</strong><span>Roti + Vegetable + Kheer + Salad</span></div><div class="row"><strong>Sunday</strong><span>Roti + Chicken curry + Salad</span></div>
+    </section>
+  </div>
+
+  <h2 class="section-title">Non-Veg Tiffin Menu</h2>
+  <div class="grid">
+    <section class="card">
+      <h3>Lunch</h3>
+      <div class="row"><strong>Monday</strong><span>Rice + Dal fry + Egg masala + Salad</span></div><div class="row"><strong>Tuesday</strong><span>Rice + Dal fry + Vegetable + Salad</span></div><div class="row"><strong>Wednesday</strong><span>Chicken Biriyani + Raita</span></div><div class="row"><strong>Thursday</strong><span>Rice + Dal fry + Vegetable + Salad</span></div><div class="row"><strong>Friday</strong><span>Rice + Rajma + Salad</span></div><div class="row"><strong>Saturday</strong><span>Rice + Dal fry + Vegetable + Salad</span></div><div class="row"><strong>Sunday</strong><span>Rice + Dal fry + Vegetable + Salad</span></div>
+    </section>
+    <section class="card">
+      <h3>Dinner</h3>
+      <div class="row"><strong>Monday</strong><span>Roti + Mix dal + Vegetable + Salad</span></div><div class="row"><strong>Tuesday</strong><span>Roti + Chole + Salad</span></div><div class="row"><strong>Wednesday</strong><span>Roti + Mix dal + Vegetable + Salad</span></div><div class="row"><strong>Thursday</strong><span>Allu paratha + Tomato Chatni + Salad</span></div><div class="row"><strong>Friday</strong><span>Roti + Egg Curry + Salad</span></div><div class="row"><strong>Saturday</strong><span>Roti + Vegetable + Kheer + Salad</span></div><div class="row"><strong>Sunday</strong><span>Roti + Chicken curry + Salad</span></div>
+    </section>
+  </div>
+
+  <h2 class="section-title">Pricing</h2>
+  <div class="pricing">
+    <div class="price">One time Lunch <b>₹100</b></div>
+    <div class="price">One time Dinner <b>₹100</b></div>
+    <div class="price">Lunch + Dinner <b>₹200</b></div>
+    <div class="price">Monthly Lunch <b>₹2100</b></div>
+    <div class="price">Monthly Dinner <b>₹2100</b></div>
+    <div class="price">Monthly Lunch + Dinner <b>₹4000</b></div>
+  </div>
+
+  <div class="note"><strong>Note:</strong> For monthly subscriptions, a lunch box must be provided, or payment must be made for the lunch box. The lunch box must have 3 containers.</div>
+
+  <footer>Click the WhatsApp number above to start a chat.</footer>
+</div>
+</body>
+</html>

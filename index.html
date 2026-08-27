@@ -83,12 +83,25 @@
             font-weight: 600;
             font-size: 0.95rem;
             color: #1f1b17;
+            cursor: pointer;
+            transition: 0.15s ease;
+            border: 1px solid transparent;
+        }
+
+        .header .contact:hover {
+            border-color: #d94f2a;
+            box-shadow: 0 4px 14px rgba(217, 79, 42, 0.12);
         }
 
         .header .contact svg {
             width: 20px;
             height: 20px;
             fill: #d94f2a;
+            flex-shrink: 0;
+        }
+
+        .phone-trigger {
+            cursor: pointer;
         }
 
         /* ── Tabs ── */
@@ -376,14 +389,150 @@
             letter-spacing: 0.02em;
         }
 
-        .footer a {
+        .footer .phone-trigger {
             color: #d94f2a;
-            text-decoration: none;
             font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
         }
 
-        .footer a:hover {
+        .footer .phone-trigger:hover {
             text-decoration: underline;
+        }
+
+        /* ── Contact Modal ── */
+        .contact-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .contact-modal.open {
+            display: flex;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-card {
+            position: relative;
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 36px 32px 32px;
+            max-width: 380px;
+            width: 90%;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            0% {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .modal-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1f1b17;
+            margin-bottom: 6px;
+        }
+
+        .modal-card p {
+            color: #6b6258;
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            flex-direction: column;
+        }
+
+        .modal-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 20px;
+            border-radius: 100px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.15s ease;
+            width: 100%;
+        }
+
+        .modal-btn.call-btn {
+            background: #1f1b17;
+            color: #fff;
+        }
+
+        .modal-btn.call-btn:hover {
+            background: #3d3730;
+            transform: scale(1.02);
+        }
+
+        .modal-btn.whatsapp-btn {
+            background: #25d366;
+            color: #fff;
+        }
+
+        .modal-btn.whatsapp-btn:hover {
+            background: #1ebe5a;
+            transform: scale(1.02);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #8f8376;
+            cursor: pointer;
+            transition: 0.15s;
+            padding: 4px 8px;
+            border-radius: 8px;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: #1f1b17;
+            background: #f0e9e3;
         }
 
         /* ── Utilities ── */
@@ -432,6 +581,10 @@
                 font-size: 0.8rem;
                 padding: 10px 12px;
             }
+
+            .modal-card {
+                padding: 28px 20px 24px;
+            }
         }
 
         @media (max-width: 400px) {
@@ -449,11 +602,11 @@
             <div class="badge">★ Daily Fresh</div>
             <h1>tiffin <span>menu</span></h1>
             <p>Homestyle meals · prepared fresh every day</p>
-            <div class="contact">
+            <div class="contact" id="phoneTriggerHeader">
                 <svg viewBox="0 0 24 24" width="20" height="20">
                     <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.36 11.36 0 003.57.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.57 1 1 0 01-.24 1.02l-2.2 2.2z"/>
                 </svg>
-                <span>+91 79755 96738</span>
+                <span class="phone-trigger" data-number="917975596738">+91 79755 96738</span>
             </div>
         </header>
 
@@ -804,15 +957,30 @@
         <!-- ═══ FOOTER ═══ -->
         <div class="footer">
             <span>🌿 Freshly prepared · </span>
-            <span>📞 <a href="tel:+917975596738">+91 79755 96738</a></span>
+            <span>📞 <span class="phone-trigger" id="phoneTriggerFooter" data-number="917975596738">+91 79755 96738</span></span>
             <span> · Made with care</span>
+        </div>
+
+        <!-- ═══ CONTACT MODAL ═══ -->
+        <div class="contact-modal" id="contactModal">
+            <div class="modal-overlay" id="modalOverlay"></div>
+            <div class="modal-card">
+                <button class="modal-close" id="modalClose">✕</button>
+                <h3>📞 Connect with us</h3>
+                <p>Choose how you'd like to reach us</p>
+                <div class="modal-actions">
+                    <button class="modal-btn call-btn" id="callBtn">📞 Call</button>
+                    <button class="modal-btn whatsapp-btn" id="whatsappBtn">💬 WhatsApp</button>
+                </div>
+            </div>
         </div>
 
     </div>
 
-    <!-- ═══ TABS SCRIPT ═══ -->
+    <!-- ═══ SCRIPTS ═══ -->
     <script>
         (function() {
+            // ── Tabs ──
             const tabs = document.querySelectorAll('.tab-btn');
             const panels = {
                 nonveg: document.getElementById('panel-nonveg'),
@@ -820,13 +988,10 @@
             };
 
             function activateTab(tabId) {
-                // update buttons
                 tabs.forEach(btn => {
                     const isActive = btn.dataset.tab === tabId;
                     btn.classList.toggle('active', isActive);
                 });
-
-                // update panels
                 Object.keys(panels).forEach(key => {
                     panels[key].classList.toggle('active', key === tabId);
                 });
@@ -839,12 +1004,75 @@
                 });
             });
 
-            // ensure the initially active tab matches the panel
+            // Ensure initial active tab matches
             const activeTab = document.querySelector('.tab-btn.active');
             if (activeTab) {
                 const id = activeTab.dataset.tab;
                 if (id) activateTab(id);
             }
+
+            // ── Contact Modal ──
+            const modal = document.getElementById('contactModal');
+            const overlay = document.getElementById('modalOverlay');
+            const closeBtn = document.getElementById('modalClose');
+            const callBtn = document.getElementById('callBtn');
+            const whatsappBtn = document.getElementById('whatsappBtn');
+            const triggers = document.querySelectorAll('.phone-trigger');
+            let currentNumber = '917975596738'; // fallback
+
+            function openModal(number) {
+                currentNumber = number || '917975596738';
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                modal.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+
+            // Trigger clicks
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const number = this.dataset.number || '917975596738';
+                    openModal(number);
+                });
+            });
+
+            // Overlay & close
+            overlay.addEventListener('click', closeModal);
+            closeBtn.addEventListener('click', closeModal);
+
+            // Call button
+            callBtn.addEventListener('click', function() {
+                if (currentNumber) {
+                    window.location.href = `tel:+${currentNumber}`;
+                }
+                closeModal();
+            });
+
+            // WhatsApp button
+            whatsappBtn.addEventListener('click', function() {
+                if (currentNumber) {
+                    // wa.me expects the number without '+' and without spaces
+                    const cleanNumber = currentNumber.replace(/\s/g, '');
+                    window.location.href = `https://wa.me/${cleanNumber}`;
+                }
+                closeModal();
+            });
+
+            // Close on Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.classList.contains('open')) {
+                    closeModal();
+                }
+            });
+
+            // Prevent modal card clicks from closing
+            document.querySelector('.modal-card').addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
         })();
     </script>
 </body>

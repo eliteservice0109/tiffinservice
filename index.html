@@ -605,6 +605,24 @@
   gtag('config', 'AW-947049230');
 </script>
 
+<!-- Google Ads conversion event snippet -->
+<script>
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-947049230/hP1zCKmwpekcEI6my8MD',
+      'value': 1.0,
+      'currency': 'INR',
+      'event_callback': callback
+  });
+  return false;
+}
+</script>
+
 </head>
 <body>
     <div class="page">
